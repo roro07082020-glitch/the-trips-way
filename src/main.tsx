@@ -95,7 +95,6 @@ function App() {
   return (
     <div id="top" className="app">
       <header className="header">
-        <Logo />
 
         <nav className={menu ? 'nav open' : 'nav'}>
           {[
