@@ -71,18 +71,11 @@ function Logo() {
       href="#top"
       aria-label="The Trips Way home"
     >
-      <span className="mark" aria-hidden="true">
-        <span className="tw">TW</span>
-        <span className="route" />
-        <span className="pin">●</span>
-      </span>
-
-      <span className="wordmark">
-        <strong>
-          THE <em>TRIPS</em> WAY
-        </strong>
-        <small>YOUR WAY TO DISCOVER THE WORLD.</small>
-      </span>
+      <img
+        src="/assets/logo-the-trips-way.png"
+        alt="The Trips Way"
+        className="logo-image"
+      />
     </a>
   );
 }
