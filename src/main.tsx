@@ -128,7 +128,7 @@ function App() {
             aria-label="Search"
             onClick={() => scroll('search')}
           >
-            <Search size={19} />
+            <Search size={21} />
           </button>
 
           <button
