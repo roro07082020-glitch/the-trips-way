@@ -152,11 +152,11 @@ function App() {
               TRAVEL • DISCOVER • EXPERIENCE
             </p>
 
-            <h1>
-              Your way to discover
-              <br />
-              <span>the world.</span>
-            </h1>
+            <img
+              src="/assets/the-trips-way-logo.png"
+              alt="The Trips Way"
+              className="hero-logo"
+            />
 
             <p className="hero-copy">
               Flights, hotels and experiences in one place.

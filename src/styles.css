@@ -23,3 +23,18 @@
     width: 165px;
   }
 }
+
+/* THE TRIPS WAY — hero official logo */
+.hero-logo {
+  display: block;
+  width: min(620px, 75vw);
+  height: auto;
+  object-fit: contain;
+  margin: 0 0 24px 0;
+}
+
+@media (max-width: 600px) {
+  .hero-logo {
+    width: min(420px, 88vw);
+  }
+}
