@@ -72,7 +72,7 @@ function Logo() {
       aria-label="The Trips Way home"
     >
       <img
-        src="/assets/logo-the-trips-way.png"
+        src="/assets/the-trips-way-logo.png"
         alt="The Trips Way"
         className="logo-image"
       />
