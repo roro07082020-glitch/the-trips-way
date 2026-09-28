@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Search,
@@ -15,6 +15,12 @@ import {
   X,
 } from 'lucide-react';
 import './styles.css';
+import {
+  destinations as destinationData,
+  getDestinationBySlug,
+} from './data/destinations';
+import DestinationPage from './pages/DestinationPage';
+import ExperiencesPage from './pages/ExperiencesPage';
 
 const destinations = [
   {
@@ -80,9 +86,108 @@ function Logo() {
   );
 }
 
+
+
+
+function TravelpayoutsWidget() {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = widgetRef.current;
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://tpwgt.com/content?currency=eur&trs=577348&shmarker=780827.the-trips-way&show_hotels=true&powered_by=true&locale=en&searchUrl=www.aviasales.com%2Fsearch&primary_override=%23C9A45C&color_button=%23C9A45C&color_icons=%23C9A45C&dark=%23102B45&light=%23F8F5EF&secondary=%23F8F5EF&special=%23E9DDC8&color_focused=%23c9A45C&border_radius=18&no_labels=&plain=true&promo_id=7879&campaign_id=100';
+    script.charset = 'utf-8';
+
+    container.appendChild(script);
+
+    return () => {
+      container.innerHTML = '';
+    };
+  }, []);
+
+  return <div ref={widgetRef} className="travelpayouts-widget" />;
+}
+
+
+function CarsWidget() {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = widgetRef.current;
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const script = document.createElement('script');
+
+    script.async = true;
+    script.src =
+      '//tpwgt.com/content?trs=577348&shmarker=780827.the-trips-way&locale=es&country=35&city=60691&powered_by=true&campaign_id=87&promo_id=2466';
+    script.charset = 'utf-8';
+
+    container.appendChild(script);
+
+    return () => {
+      container.innerHTML = '';
+    };
+  }, []);
+
+  return <div ref={widgetRef} className="travelpayouts-widget" />;
+}
+
+
+function ExperiencesWidget() {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = widgetRef.current;
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const script = document.createElement('script');
+
+    script.async = true;
+    script.src =
+      'https://tpwgt.com/content?currency=EUR&trs=577348&shmarker=780827.the-trips-way&language=es&layout=responsive&cards=12&powered_by=true&campaign_id=89&promo_id=3947';
+    script.charset = 'utf-8';
+
+    container.appendChild(script);
+
+    return () => {
+      container.innerHTML = '';
+    };
+  }, []);
+
+  return <div ref={widgetRef} className="travelpayouts-widget experiences-widget" />;
+}
+
 function App() {
   const [menu, setMenu] = useState(false);
   const [tab, setTab] = useState('Hotels');
+  const [showExperiences, setShowExperiences] = useState(false);
+
+  const getDestinationFromPath = () => {
+    const match = window.location.pathname.match(
+      /^\/destinos\/([^/]+)\/?$/
+    );
+
+    if (!match) return undefined;
+
+    return getDestinationBySlug(match[1]);
+  };
+
+  const [currentDestination, setCurrentDestination] = useState(
+    getDestinationFromPath()
+  );
 
   const scroll = (id: string) => {
     document.getElementById(id)?.scrollIntoView({
@@ -91,6 +196,47 @@ function App() {
 
     setMenu(false);
   };
+
+  const openDestination = (slug: string) => {
+    console.log('🚀 OPEN DESTINATION:', slug);
+
+    const destination = getDestinationBySlug(slug);
+
+    console.log('📍 DESTINATION FOUND:', destination);
+
+    if (!destination) {
+      console.error('❌ DESTINATION NOT FOUND:', slug);
+      return;
+    }
+
+    window.history.pushState({}, '', `/destinos/${slug}`);
+    setCurrentDestination(destination);
+    setMenu(false);
+    window.scrollTo(0, 0);
+  };
+
+  if (currentDestination) {
+    return (
+      <DestinationPage
+        destination={currentDestination}
+        onVolver={() => {
+          window.history.pushState({}, '', '/');
+          setCurrentDestination(undefined);
+        }}
+      />
+    );
+  }
+
+  if (showExperiences) {
+    return (
+      <ExperiencesPage
+        onVolver={() => {
+          setShowExperiences(false);
+          window.scrollTo(0, 0);
+        }}
+      />
+    );
+  }
 
   return (
     <div id="top" className="app">
@@ -107,15 +253,32 @@ function App() {
           ].map((name) => (
             <button
               key={name}
-              onClick={() =>
-                scroll(
-                  name === 'Destinations'
-                    ? 'destinations'
-                    : name === 'Experiences'
-                      ? 'experiences'
-                      : 'search'
-                )
+              onClick={() => {
+              if (name === 'Experiences') {
+                setShowExperiences(true);
+                setMenu(false);
+                window.scrollTo(0, 0);
+                return;
               }
+
+              if (
+                name === 'Flights' ||
+                name === 'Hotels' ||
+                name === 'Cars'
+              ) {
+                setTab(name);
+                scroll('search');
+                return;
+              }
+
+              scroll(
+                name === 'Destinations'
+                  ? 'destinations'
+                  : name === 'Experiences'
+                    ? 'experiences'
+                    : 'search'
+              );
+            }}
             >
               {name}
             </button>
@@ -126,7 +289,13 @@ function App() {
           <button
             className="icon-btn"
             aria-label="Search"
-            onClick={() => scroll('search')}
+            onClick={() => {
+  window.open(
+    'https://kkday.tpx.gr/vy8m9l9IP',
+    '_blank',
+    'noopener,noreferrer'
+  );
+}}
           >
             <Search size={21} />
           </button>
@@ -164,72 +333,14 @@ function App() {
             </p>
 
             <div id="search" className="search-card">
-              <div className="tabs">
-                {['Flights', 'Hotels', 'Experiences'].map(
-                  (name) => (
-                    <button
-                      key={name}
-                      className={
-                        tab === name ? 'active' : ''
-                      }
-                      onClick={() => setTab(name)}
-                    >
-                      {name}
-                    </button>
-                  )
-                )}
-              </div>
-
-              <div className="fields">
-                <div className="field">
-                  <MapPin />
-
-                  <div>
-                    <small>Destination</small>
-                    <strong>
-                      Where do you want to go?
-                    </strong>
-                  </div>
-                </div>
-
-                <div className="field">
-                  <CalendarDays />
-
-                  <div>
-                    <small>Check-in</small>
-                    <strong>Add dates</strong>
-                  </div>
-                </div>
-
-                <div className="field">
-                  <CalendarDays />
-
-                  <div>
-                    <small>Check-out</small>
-                    <strong>Add dates</strong>
-                  </div>
-                </div>
-
-                <div className="field guests">
-                  <Users />
-
-                  <div>
-                    <small>Travellers</small>
-                    <strong>2 travellers</strong>
-                  </div>
-                </div>
-
-                <button
-                  className="search-submit"
-                  onClick={() => scroll('destinations')}
-                >
-                  <Search size={21} />
-                  <span>Search {tab}</span>
-                </button>
-              </div>
+              {tab === 'Cars' ? (
+              <CarsWidget />
+            ) : (
+              <TravelpayoutsWidget />
+            )}
             </div>
 
-            <p className="powered">
+        <p className="powered">
               Search powered by <b>Travelpayouts</b> ·
               partner tools ready to connect
             </p>
@@ -283,7 +394,7 @@ function App() {
           </div>
 
           <div className="dest-grid">
-            {destinations.map((destination, index) => (
+            {destinationData.map((destination, index) => (
               <article
                 className={`dest-card ${
                   index === 0 ? 'large' : ''
@@ -301,7 +412,7 @@ function App() {
                   <h3>{destination.name}</h3>
 
                   <button
-                    onClick={() => scroll('search')}
+                    onClick={() => openDestination(destination.slug)}
                   >
                     Discover
                     <ArrowRight size={15} />
@@ -338,7 +449,9 @@ function App() {
             </button>
           </div>
 
-          <div className="experience-grid">
+          
+
+        <div className="experience-grid">
             {experiences.map((experience) => (
               <article
                 className="experience-card"
@@ -356,7 +469,11 @@ function App() {
                   <h3>{experience.title}</h3>
 
                   <button
-                    onClick={() => scroll('search')}
+                    onClick={() => window.open(
+  'https://kkday.tpx.gr/vy8m9l9IP',
+  '_blank',
+  'noopener,noreferrer'
+)}
                   >
                     Find your way
                     <ArrowRight size={15} />
@@ -388,31 +505,13 @@ function App() {
             </p>
           </div>
 
-          <div className="widget-slot">
+          <div className="widget-slot aviasales-widget">
             <div className="slot-top">
-              <span>TRAVELPAYOUTS WIDGET</span>
-              <span className="live-dot">READY</span>
+              <span>FLIGHTS</span>
+              <span className="live-dot">LIVE</span>
             </div>
 
-            <div className="slot-inner">
-              <Plane />
-
-              <h3>
-                Your live search widget goes here
-              </h3>
-
-              <p>
-                Paste the official Travelpayouts widget
-                code here when your website project is
-                approved.
-              </p>
-
-              <button
-                onClick={() => scroll('search')}
-              >
-                Preview search
-                <ArrowRight size={15} />
-              </button>
+            <div className="aviasales-widget-frame">
             </div>
           </div>
         </section>
