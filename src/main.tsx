@@ -157,7 +157,7 @@ function ExperiencesWidget() {
 
     script.async = true;
     script.src =
-      'https://tpwgt.com/content?currency=EUR&trs=577348&shmarker=780827.the-trips-way&language=es&layout=responsive&cards=12&powered_by=true&campaign_id=89&promo_id=3947';
+      'https://tpwgt.com/content?currency=EUR&trs=577348&shmarker=780827.the-trips-way&language=es&locale=219133&layout=responsive&cards=12&powered_by=true&campaign_id=89&promo_id=3947';
     script.charset = 'utf-8';
 
     container.appendChild(script);
