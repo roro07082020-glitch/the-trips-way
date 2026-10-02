@@ -48,6 +48,15 @@ const tabs: {
   },
 ];
 
+const affiliateLinks: Record<TravelTab, string> = {
+  flights: 'https://aviasales.tpx.gr/nibB2bfD',
+  hotels: 'https://kkday.tpx.gr/vy8my9lP',
+  cars: 'https://localrent.tpx.gr/lHpfPAgy',
+  experiences: 'https://klook.tpx.gr/pqAYemzR',
+  esim: 'https://yesim.tpx.gr/XhFp4yMu',
+  transfers: 'https://kiwitaxi.tpx.gr/zVtqPcdn',
+};
+
 export default function DestinationPage({
   destination,
   onVolver,
@@ -344,7 +353,14 @@ export default function DestinationPage({
 
               <button
                 className="destination-widget-search"
-                type="button"
+              type="button"
+              onClick={() =>
+                window.open(
+                  affiliateLinks[activeTab],
+                  '_blank',
+                  'noopener,noreferrer'
+                )
+              }
               >
                 <Search size={20} />
                 <span>{getButtonLabel()}</span>
@@ -408,8 +424,14 @@ export default function DestinationPage({
              </div>
 
              <button
-               type="button"
-               onClick={() => setActiveTab('experiences')}
+              type="button"
+              onClick={() =>
+                window.open(
+                  affiliateLinks.experiences,
+                  '_blank',
+                  'noopener,noreferrer'
+                )
+              }
              >
                Explorar experiencias
                <ArrowRight size={16} />
@@ -431,9 +453,15 @@ export default function DestinationPage({
              </div>
 
              <button
-               type="button"
-               onClick={() => setActiveTab('hotels')}
-             >
+              type="button"
+              onClick={() =>
+                window.open(
+                  affiliateLinks.hotels,
+                  '_blank',
+                  'noopener,noreferrer'
+                )
+              }
+            >
                Buscar hoteles
                <ArrowRight size={16} />
              </button>
