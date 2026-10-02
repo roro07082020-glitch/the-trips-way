@@ -349,8 +349,7 @@ export default function DestinationPage({
                   : ''
               }`}
             >
-              {renderSearchFields()}
-
+  
               <button
                 className="destination-widget-search"
               type="button"
