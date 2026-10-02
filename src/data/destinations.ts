@@ -14,7 +14,7 @@ export const destinations: Destination[] = [
     country: 'Portugal',
     region: 'Southern Portugal',
     image:
-      'https://images.unsplash.com/photo-1699726232720-402e00259c6c?auto=format&fit=crop&w=1600&q=90',
+      '/assets/destinations/algarve.jpg',
     description:
       'Golden cliffs, hidden beaches and Atlantic landscapes across southern Portugal.',
   },
@@ -24,7 +24,7 @@ export const destinations: Destination[] = [
     country: 'Portugal',
     region: 'Portugal',
     image:
-      'https://images.unsplash.com/photo-1749511380076-38ff3b3a7d6e?auto=format&fit=crop&w=1600&q=90',
+      '/assets/destinations/lisbon.jpg',
     description:
       'A city of historic streets, viewpoints, food, culture and Atlantic light.',
   },
@@ -34,7 +34,7 @@ export const destinations: Destination[] = [
     country: 'Portugal',
     region: 'Northern Portugal',
     image:
-      'https://images.unsplash.com/photo-1748792461789-e94a91541532?auto=format&fit=crop&w=1600&q=90',
+      '/assets/destinations/porto.jpg',
     description:
       'Riverside views, historic architecture and the character of northern Portugal.',
   },
@@ -44,7 +44,7 @@ export const destinations: Destination[] = [
     country: 'Portugal',
     region: 'Atlantic Islands',
     image:
-      'https://images.unsplash.com/photo-1722608129690-57334f17f6de?auto=format&fit=crop&w=1600&q=90',
+      '/assets/destinations/madeira.jpg',
     description:
       'Dramatic mountains, ocean views, levadas and unforgettable island landscapes.',
   },
@@ -54,7 +54,7 @@ export const destinations: Destination[] = [
     country: 'Spain',
     region: 'Catalonia',
     image:
-      'https://images.unsplash.com/photo-1758471206484-0eaa2568320c?auto=format&fit=crop&w=1600&q=90',
+      '/assets/destinations/barcelona.jpg',
     description:
       'Mediterranean beaches, architecture, food and vibrant city life.',
   },
@@ -64,7 +64,7 @@ export const destinations: Destination[] = [
     country: 'Spain',
     region: 'Community of Madrid',
     image:
-      'https://images.unsplash.com/photo-1543785734-4b6e564642f8?auto=format&fit=crop&w=1600&q=90',
+      '/assets/destinations/madrid.jpg',
     description:
       'Art, gastronomy, elegant boulevards and the energy of Spain’s capital.',
   },
@@ -74,7 +74,7 @@ export const destinations: Destination[] = [
     country: 'Spain',
     region: 'Balearic Islands',
     image:
-      'https://images.unsplash.com/photo-1661717285026-5a0ef5198b08?auto=format&fit=crop&w=1600&q=90',
+      '/assets/destinations/mallorca.jpg',
     description:
       'Turquoise coves, Mediterranean villages and spectacular island landscapes.',
   },
@@ -84,7 +84,7 @@ export const destinations: Destination[] = [
     country: 'Spain',
     region: 'Andalusia',
     image:
-      'https://images.unsplash.com/photo-1612972806701-9cffb7470ed2?auto=format&fit=crop&w=1600&q=90',
+      '/assets/destinations/malaga.jpg',
     description:
       'Sun, beaches, culture and the relaxed Mediterranean atmosphere of Andalusia.',
   },
